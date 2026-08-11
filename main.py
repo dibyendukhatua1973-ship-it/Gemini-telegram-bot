@@ -10,7 +10,7 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-BOT_TOKEN = "8974579957:AAGoqSEd-miv5Vi5NGE6kdENya6v3QE214K"
+BOT_TOKEN = "8974579957:AAGoqSEd-miv5Vi5NGE6kdENya6v3QE214k"
 
 # Gemini Client তৈরি
 client = genai.Client(api_key="AQ.Ab8RN6LJsYPtGEZbLf2RFe04dj9CcQXQFuiUNba7LRtNXJ51QhQ")
