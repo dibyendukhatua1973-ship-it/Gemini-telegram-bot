@@ -1,6 +1,6 @@
 import os
 import logging
-import google.generativeai as genai
+from Google import genai
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
