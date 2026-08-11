@@ -16,7 +16,7 @@ model_name = 'gemini-1.5-flash'
 chat = client.chats.create(model=model_name)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("হ্যালো! আমি আপনার জেমিনি পিকু এআই বট। আমাকে যেকোনো প্রশ্ন করুন।")
+    await update.message.reply_text("হ্যালো! আমি আপনার পিকু এআই বট। আমাকে যেকোনো প্রশ্ন করুন।")
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text
