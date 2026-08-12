@@ -31,7 +31,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         response = chat.send_message(user_text)
         await update.message.reply_text(response.text)
     except Exception as e:
-        await update.message.reply_text("দুঃখিত, বর্তমানে আমি উত্তর দিতে পারছি না। কারণ আমার সিস্টেম এখন অনমিত্র ডেভেলপমেন্ট করছে।")
+        await update.message.reply_text("দুঃখিত, বর্তমানে আমি উত্তর দিতে পারছি না। কারণ আমার সিস্টেম এখন (অনমিত্র) ডেভেলপ করছে।")
 
 if __name__ == '__main__':
     app = ApplicationBuilder().token(BOT_TOKEN).build()
