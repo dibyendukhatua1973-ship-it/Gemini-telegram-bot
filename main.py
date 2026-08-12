@@ -1,4 +1,3 @@
-import os
 import logging
 from google import genai
 from telegram import Update
@@ -10,33 +9,43 @@ logging.basicConfig(
     level=logging.INFO
 )
 
+# আপনার প্রদান করা টেলিগ্রাম বট টোকেন ও জেমিনি এপিআই কী
 BOT_TOKEN = "8974579957:AAGoqSEd-miv5Vi5NGE6kdENya6v3QE214k"
+GEMINI_API_KEY = "AQ.Ab8RN6LJsYPtGEZbLf2RFe04dj9CcQXQFuiUNba7LRtNXJ51QhQ"
 
-# Gemini Client তৈরি
-client = genai.Client(api_key="AQ.Ab8RN6LJsYPtGEZbLf2RFe04dj9CcQXQFuiUNba7LRtNXJ51QhQ")
-
-# Gemini 2.5 Pro মডেল সেট করা হলো
-model_name = 'gemini-2.5-pro'
-chat = client.chats.create(model=model_name)
+# Google GenAI Client তৈরি
+client = genai.Client(api_key=GEMINI_API_KEY)
+MODEL_NAME = 'gemini-2.5-pro'
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("হ্যালো! আমি আপনার বন্ধু পিকু AI bot. Created by [AM]Anamitra Khatua. আপনি আমাকে যেকোনো প্রশ্ন করতে পারেন")
+    await update.message.reply_text("হ্যালো! আমি আপনার বন্ধু পিকু AI bot. Created by [AM]Anamitra Khatua. আপনি আমাকে যেকোনো প্রশ্ন করতে পারেন।")
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text
-    # বট টাইপিং দেখাচ্ছে তা নিশ্চিত করা
+    
+    # টাইপিং ইন্ডিকেটর পাঠানো
     await context.bot.send_chat_action(chat_id=update.effective_chat.id, action="typing")
 
     try:
-        response = chat.send_message(user_text)
-        await update.message.reply_text(response.text)
+        # Gemini 2.5 Pro মডেল দিয়ে উত্তর প্রস্তুত করা
+        response = client.models.generate_content(
+            model=MODEL_NAME,
+            contents=user_text
+        )
+        
+        if response.text:
+            await update.message.reply_text(response.text)
+        else:
+            await update.message.reply_text("দুঃখিত, কোনো উত্তর প্রস্তুত করা সম্ভব হয়নি।")
+            
     except Exception as e:
+        logging.error(f"Error details: {e}")
         await update.message.reply_text("দুঃখিত, বর্তমানে আমি উত্তর দিতে পারছি না। কারণ আমার সিস্টেম এখন (অনমিত্র) ডেভেলপ করছে।")
 
 if __name__ == '__main__':
     app = ApplicationBuilder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler('start', start))
     app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_message))
+    
+    print("Bot is running...")
     app.run_polling()
-
-
