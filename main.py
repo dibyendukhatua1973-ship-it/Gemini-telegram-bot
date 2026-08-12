@@ -18,7 +18,7 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 MODEL_NAME = 'gemini-2.5-pro'
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("হ্যালো! আমি আপনার বন্ধু পিকু AI bot. Created by [AM]Anamitra Khatua. আপনি আমাকে যেকোনো প্রশ্ন করতে পারেন।")
+    await update.message.reply_text("I am a bot. created by X")
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text
@@ -40,7 +40,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             
     except Exception as e:
         logging.error(f"Error details: {e}")
-        await update.message.reply_text("দুঃখিত, বর্তমানে আমি উত্তর দিতে পারছি না। কারণ আমার সিস্টেম এখন (অনমিত্র) ডেভেলপ করছে।")
+        await update.message.reply_text("Sorry")
 
 if __name__ == '__main__':
     app = ApplicationBuilder().token(BOT_TOKEN).build()
