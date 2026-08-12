@@ -20,7 +20,7 @@ model_name = 'gemini-2.5-pro'
 chat = client.chats.create(model=model_name)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("হ্যালো! আমি আপনার বন্ধু পিকু এআই বট। Created by Anamitra Khatua. আমাকে যেকোনো প্রশ্ন করুন।")
+    await update.message.reply_text("হ্যালো! আমি আপনার বন্ধু পিকু AI bot. Created by [AM]Anamitra Khatua. আপনি আমাকে যেকোনো প্রশ্ন করতে পারেন")
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text
@@ -31,7 +31,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         response = chat.send_message(user_text)
         await update.message.reply_text(response.text)
     except Exception as e:
-        await update.message.reply_text("দুঃখিত, বর্তমানে আমি উত্তর দিতে পারছি না। কারণ আমার সিস্টেম ডেভেলপমেন্ট চলছে।")
+        await update.message.reply_text("দুঃখিত, বর্তমানে আমি উত্তর দিতে পারছি না। কারণ আমার সিস্টেম এখন অনমিত্র ডেভেলপমেন্ট করছে।")
 
 if __name__ == '__main__':
     app = ApplicationBuilder().token(BOT_TOKEN).build()
