@@ -1,31 +1,30 @@
-import os
-import logging
-import google.generativeai as genai
-from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
+name: Run PM_Piku AI
 
-# 
-BOT_TOKEN = "8974579957:AAGoqSEd-miv5Vi5NGE6kdENya6v3QE214k"
-genai.configure(api_key="
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch: # যাতে ম্যানুয়ালি Run করা যায়
 
-model = genai.GenerativeModel('gemini-1.5-flash')
-chat = model.start_chat(history=[]) # এখানে বটের স্মৃতি বা হিস্ট্রি জমা থাকবে
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("হ্যালো! আমি আপনার জেমিনি পিকু এআই বট। আমাকে যেকোনো প্রশ্ন করুন।")
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v3
 
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_text = update.message.text
-    await context.bot.send_chat_action(chat_id=update.effective_chat.id, action="typing")
-    
-    try:
-        response = chat.send_message(user_text)
-        await update.message.reply_text(response.text)
-    except Exception as e:
-        await update.message.reply_text("দুঃখিত, বর্তমানে আমি উত্তর দিতে পারছি না।")
+    - name: Set up Python Environment
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
 
-if __name__ == '__main__':
-    app = ApplicationBuilder().token(BOT_TOKEN).build()
-    app.add_handler(CommandHandler('start', start))
-    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_message))
-    app.run_polling()
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run Telegram Bot
+      env:
+        BOT_TOKEN: ${{ secrets.8841244048:AAHA5PHAGi-K5g97bkv4aQ5RDv52QTGfbI4 }}
+        GEMINI_API_KEY: ${{ AQ.Ab8RN6LJsYpTgEZbLf2RFeO4dj9CqXQFuiUNba7LRtNxJ51QhQ }}
+      run: python main.py
